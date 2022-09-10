@@ -16,15 +16,14 @@
 
 
 import time
+from concurrent.futures import Future
 from itertools import count
 from multiprocessing import cpu_count
-from concurrent.futures import Future
 
 from pebble.common import execute, launch_thread
-from pebble.pool.base_pool import MapFuture, MapResults
-from pebble.pool.base_pool import BasePool, Task, TaskPayload
-from pebble.pool.base_pool import iter_chunks, run_initializer
-from pebble.pool.base_pool import CREATED, ERROR, RUNNING, SLEEP_UNIT
+from pebble.pool.base_pool import (CREATED, ERROR, RUNNING, SLEEP_UNIT,
+                                   BasePool, MapFuture, MapResults, Task,
+                                   TaskPayload, iter_chunks, run_initializer)
 
 
 class ThreadPool(BasePool):

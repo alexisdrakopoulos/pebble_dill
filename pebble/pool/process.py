@@ -14,26 +14,26 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with Pebble.  If not, see <http://www.gnu.org/licenses/>.
 
-import os
-import time
 import atexit
-import pickle
 import multiprocessing
-
-from itertools import count
+import os
+import pickle
+import time
 from collections import namedtuple
-from signal import SIG_IGN, SIGINT, signal
 from concurrent.futures import CancelledError, TimeoutError
 from concurrent.futures.process import BrokenProcessPool
+from itertools import count
+from multiprocessing import cpu_count
+from signal import SIG_IGN, SIGINT, signal
 
+import multiprocess
+from pebble.common import (ProcessExpired, ProcessFuture, launch_process,
+                           launch_thread, process_execute, stop_process)
+from pebble.pool.base_pool import (CREATED, ERROR, RUNNING, SLEEP_UNIT,
+                                   BasePool, MapResults, ProcessMapFuture,
+                                   Task, TaskPayload, iter_chunks,
+                                   run_initializer)
 from pebble.pool.channel import ChannelError, channels
-from pebble.pool.base_pool import BasePool, Task, TaskPayload
-from pebble.pool.base_pool import ProcessMapFuture, MapResults
-from pebble.pool.base_pool import iter_chunks, run_initializer
-from pebble.pool.base_pool import CREATED, ERROR, RUNNING, SLEEP_UNIT
-from pebble.common import launch_process, stop_process
-from pebble.common import ProcessExpired, ProcessFuture
-from pebble.common import process_execute, launch_thread
 
 
 class ProcessPool(BasePool):
@@ -49,11 +49,11 @@ class ProcessPool(BasePool):
 
     """
 
-    def __init__(self, max_workers=multiprocessing.cpu_count(), max_tasks=0,
+    def __init__(self, max_workers=cpu_count(), max_tasks=0,
                  initializer=None, initargs=(), context=None):
         super(ProcessPool, self).__init__(
             max_workers, max_tasks, initializer, initargs)
-        mp_context = multiprocessing if context is None else context
+        mp_context = multiprocess if context is None else context
         self._pool_manager = PoolManager(self._context, mp_context)
         self._task_scheduler_loop = None
         self._pool_manager_loop = None
