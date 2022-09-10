@@ -1,12 +1,12 @@
 [tool.poetry]
-name = "pebble-dill"
+name = "pebble"
 version = "0.1.0"
 description = ""
 authors = [
     "Alexis Drakopoulos <33128441+alexisdrakopoulos@users.noreply.github.com>",
 ]
 readme = "README.md"
-packages = [{ include = "pebble_dill" }]
+packages = [{ include = "pebble" }]
 license = "LGPL"
 
 [tool.poetry.dependencies]
