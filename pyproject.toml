@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "pebble-dill"
+version = "0.1.0"
+description = ""
+authors = [
+    "Alexis Drakopoulos <33128441+alexisdrakopoulos@users.noreply.github.com>",
+]
+readme = "README.md"
+packages = [{ include = "pebble_dill" }]
+license = "LGPL"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+multiprocess = "^0.70.13"
+
+
+[tool.poetry.group.dev.dependencies]
+flake8 = "^5.0.4"
+pydocstyle = "^6.1.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
